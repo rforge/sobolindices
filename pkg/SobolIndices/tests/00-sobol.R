@@ -88,62 +88,62 @@ logit.SI <- LogSIkorder(3, ranData, c(0.1, beta)/10)
 
 ## single variable main effect
 # identity link for variable 1
-SI1a <- SobolIndices(sim, varinput=1, c(0.1, beta)/10, link="identity")
+SI1a <- SobolIndices(ranData, varinput=1, c(0.1, beta)/10, link="identity")
 SI1a@sobol.indices
 
 # log link for variable 1
-SI1b <- SobolIndices(sim, varinput=1, c(0.1, beta)/10, link="log")
+SI1b <- SobolIndices(ranData, varinput=1, c(0.1, beta)/10, link="log")
 SI1b@sobol.indices
 
 # logit link for variable 1
-SI1c <- SobolIndices(sim, varinput=1, c(0.1, beta)/10, link="logit")
+SI1c <- SobolIndices(ranData, varinput=1, c(0.1, beta)/10, link="logit")
 SI1c@sobol.indices
 
 
 ## two variables interaction main effect
 # identity link for variables 1 and 2 interaction
-SI2a <- SobolIndices(sim, varinput=c(1,2,3), c(0.1, beta)/10, link="identity")
+SI2a <- SobolIndices(ranData, varinput=c(1,2,3), c(0.1, beta)/10, link="identity")
 SI2a@sobol.indices
 
 # log link for variables 1 and 2 interaction
-SI2b <- SobolIndices(sim, varinput=c(1,2,3), c(0.1, beta)/10, link="log")
+SI2b <- SobolIndices(ranData, varinput=c(1,2,3), c(0.1, beta)/10, link="log")
 SI2b@sobol.indices
 
 # logit link for variables 1 and 2 interaction
-SI2c <- SobolIndices(sim, varinput=c(1,2,3), c(0.1, beta)/10, link="logit")
+SI2c <- SobolIndices(ranData, varinput=c(1,2,3), c(0.1, beta)/10, link="logit")
 SI2c@sobol.indices
 
 
 ## all single variables' main effects
 # identity link for single variables
-SI3a <- SobolIndicesAll(sim, orderinput=1, c(0.1, beta)/10, link="identity")
+SI3a <- SobolIndicesAll(ranData, orderinput=1, c(0.1, beta)/10, link="identity")
 SI3a@sobol.indices.all
 summary(SI3a)
 
 # log link for single variables
-SI3b <- SobolIndicesAll(sim, orderinput=1, c(0.1, beta)/10, link="log")
+SI3b <- SobolIndicesAll(ranData, orderinput=1, c(0.1, beta)/10, link="log")
 SI3b@sobol.indices.all
 summary(SI3b)
 
 # logit link for single variables
-SI3c <- SobolIndicesAll(sim, orderinput=1, c(0.1, beta)/10, link="logit")
+SI3c <- SobolIndicesAll(ranData, orderinput=1, c(0.1, beta)/10, link="logit")
 SI3c@sobol.indices.all
 summary(SI3c)
 
 
 ## all variables interactions' main effects
 # identity link for all paired variables
-SI4a <- SobolIndicesAll(sim, orderinput=2, c(0.1, beta)/10, link="identity")
+SI4a <- SobolIndicesAll(ranData, orderinput=2, c(0.1, beta)/10, link="identity")
 SI4a@sobol.indices.all
 summary(SI4a)
 
 # log link for all paired variables
-SI4b <- SobolIndicesAll(sim, orderinput=2, c(0.1, beta)/10, link="log")
+SI4b <- SobolIndicesAll(ranData, orderinput=2, c(0.1, beta)/10, link="log")
 SI4b@sobol.indices.all
 summary(SI4b)
 
 # logit link for all paired variables
-SI4c <- SobolIndicesAll(sim, orderinput=2, c(0.1, beta)/10, link="logit")
+SI4c <- SobolIndicesAll(ranData, orderinput=2, c(0.1, beta)/10, link="logit")
 SI4c@sobol.indices.all
 summary(SI4c)
 
