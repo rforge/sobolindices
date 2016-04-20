@@ -1,9 +1,14 @@
 ###################################################################################
-# library(SobolIndices)
+library(SobolIndices)
 
 if (!require("rstiefel")) {
   install.packages("rstiefel", repos="https://cloud.r-project.org/") 
   library(rstiefel)
+}
+
+if (!require("MASS")) {
+  install.packages("MASS", repos="https://cloud.r-project.org/") 
+  library(MASS)
 }
 
 # simulate one unstructured dataset
