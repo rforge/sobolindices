@@ -37,7 +37,7 @@ IdenSIkorder(orderinput, xdata, beta)
      \code{orderinput}) sobol indices main effect.}
 }
 \details{
-  This is the proposed method for computing the sobol indices under the
+  This is our proposed method for computing the sobol indices under the
   identity link. The idea is to use the definition of sobol indices to 
   derive formulas for variables' main effect of interest and determine 
   how important the variables are by computational calculations.

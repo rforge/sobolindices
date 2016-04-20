@@ -41,7 +41,7 @@ LogitSIkordersample(orderinput, xdata, beta)
      \code{orderinput}) sobol indices main effect.}
 }
 \details{
-  This is the proposed method for computing the sobol indices under the
+  This is our proposed method for computing the sobol indices under the
   logit link. The idea is to use the definition of sobol indices to 
   derive variables' main effect of interest by applying sampling (or 
   integration) approach and determine how important the variables are
