@@ -1,8 +1,10 @@
 ###################################################################################
 # library(SobolIndices)
 
-install.packages("rstiefel")
-library(rstiefel)
+if (!require("rstiefel")) {
+  install.packages("rstiefel", repos="https://cloud.r-project.org/") 
+  library(rstiefel)
+}
 
 # simulate one unstructured dataset
 set.seed(201605)
