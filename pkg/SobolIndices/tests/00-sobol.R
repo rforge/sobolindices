@@ -2,7 +2,7 @@
 library(SobolIndices)
 
 if (!require("rstiefel")) {
-  if (..Platform$OS.type == "unix") {
+  if (.Platform$OS.type == "unix") {
     loca <- getwd()
     install.packages("rstiefel", repos="https://cloud.r-project.org/", lib=loca)
     library(rstiefel, lib.loc=loca)
