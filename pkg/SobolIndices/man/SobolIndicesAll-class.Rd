@@ -96,4 +96,6 @@ link <- "logit"
 siall <- SobolIndicesAll(xdata, orderinput=orderinput, beta, link="logit")
 # Review the results
 summary(siall)
+}
+\keyword{classes}
 \keyword{models}

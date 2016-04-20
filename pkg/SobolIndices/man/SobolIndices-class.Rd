@@ -94,4 +94,6 @@ link <- "identity"
 si <- SobolIndices(xdata, varinput=varinput, beta, link="identity")
 # Review the results
 summary(si)
+}
+\keyword{classes}
 \keyword{models}
