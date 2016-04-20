@@ -14,7 +14,7 @@ class, and enhanced the computation by automating the whole procedure.
 }
 \usage{
 SobolIndices(xdata, varinput=1, beta=0, link=c("identity","log","logit"))
-summary(object)
+summary(object, ...)
 }
 \arguments{
   \item{xdata}{A data set of class 'matrix' or 'data.frame' which only 
@@ -77,8 +77,8 @@ Objects should be created using the \code{SobolIndices} constructor.
 }
 \author{Min Wang <wang.1807@mbi.osu.edu>}
 \seealso{
-  \code{\link{identitySIfunction}}, \code{\link{logSIfunction}} and 
-  \code{\link{logitSIfunction}} to get a complete list of the functions
+  \code{identitySIfunction}, \code{logSIfunction} and 
+  \code{logitSIfunction} to get a complete list of the functions
   under different link functions to compute the sobol indices.
 }
 \examples{

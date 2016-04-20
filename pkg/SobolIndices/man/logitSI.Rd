@@ -14,31 +14,31 @@
   The method is to estimate the sobol indices under the logit link model.
 }
 \usage{
-LogitSImainsingle(singleind, xdata, beta)
+LogitSImainsingle(i, xdata, beta)
 LogitSImain(xdata, beta)
-LogitSIsecpair(pairind, xdata, beta)
+LogitSIsecpair(pair, xdata, beta)
 LogitSIsec(xdata, beta)
-LogitSImainsample(singleind, xdata, beta)
+LogitSImainsample(i, xdata, beta)
 LogitSIfordersample(xdata, beta)
-LogitSIkintersample(interind, xdata, beta)
-LogitSIkordersample(orderinput, xdata, beta)
+LogitSIkintersample(interaction, xdata, beta)
+LogitSIkordersample(k, xdata, beta)
 }
 \arguments{
   \item{xdata}{A data set of class 'matrix' or 'data.frame' which only 
      includes the variables or features.}
   \item{beta}{A vector; the coefficients of the variables estimated 
      by the regression model.}
-  \item{singleind}{A positive integer; the index of the variable which
+  \item{i}{A positive integer; the index of the variable which
     is of interest for computing the sobol indices main effect.}
-  \item{pairind}{A vector of length two; the indices of the paired 
+  \item{pair}{A vector of length two; the indices of the paired 
     variables which are of interest for computing their interaction
     sobol indices main effect.}
-  \item{interind}{A vector; the indices of the variables which are 
+  \item{interaction}{A vector; the indices of the variables which are 
     of interest for computing their interaction (usually high order)
     sobol indices main effect.}
-  \item{orderinput}{A positive integer; the order which are of interest
+  \item{k}{A positive integer; the order which are of interest
      for computing all variables' possible interactions' (of order 
-     \code{orderinput}) sobol indices main effect.}
+     \code{k}) sobol indices main effect.}
 }
 \details{
   This is our proposed method for computing the sobol indices under the
@@ -78,7 +78,7 @@ LogitSIkordersample(orderinput, xdata, beta)
 
   The \code{LogitSIkordersample} function returns a list (or numeric object) which 
   are the numerators of sobol indices for deriving the main effects of all 
-  possible variables interactions of order \code{orderinput} by using sampling
+  possible variables interactions of order \code{k} by using sampling
   approach. 
 }
 \references{
@@ -90,8 +90,8 @@ models, submitted.
 }
 \author{Min Wang <wang.1807@mbi.osu.edu>}
 \seealso{
-  Methods to address the other link functions can be found at \code{\link{identitySI}} and 
-  \code{\link{logSI}}.
+  Methods to address the other link functions can be found at \code{identitySI} and 
+  \code{logSI}.
 }
 \examples{
 xdata <- matrix(rnorm(20*5, 1), ncol=5)
