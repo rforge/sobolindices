@@ -5,7 +5,6 @@
 
 library(MASS)
 library(cubature)
-library(glmnet)
 library(mvtnorm)
 
 ## use integral to compute E(Z^(s-integer.part)/(1+Z))
