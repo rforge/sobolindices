@@ -13,6 +13,17 @@ if (!require("rstiefel")) {
   } 
 }
 
+if (!require("MASS")) {
+  if (.Platform$OS.type == "unix") {
+    loca <- getwd()
+    install.packages("MASS", repos="https://cloud.r-project.org/", lib=loca)
+    library(MASS, lib.loc=loca)
+  } else {
+    install.packages("MASS", repos="https://cloud.r-project.org/")
+    library(MASS)
+  } 
+}
+
 # simulate one unstructured dataset
 set.seed(201605)
 N <- 50
