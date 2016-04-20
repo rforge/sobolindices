@@ -1,15 +1,16 @@
 ###################################################################################
 library(SobolIndices)
 
-# if (!require("rstiefel")) {
-#   install.packages("rstiefel", repos="https://cloud.r-project.org/") 
-#   library(rstiefel)
-# }
-
-# if (!require("MASS")) {
-#   install.packages("MASS", repos="https://cloud.r-project.org/") 
-#   library(MASS)
-# }
+if (!require("rstiefel")) {
+  if (..Platform$OS.type == "unix") {
+    loca <- getwd()
+    install.packages("rstiefel", repos="https://cloud.r-project.org/", lib=loca)
+    library(rstiefel, lib.loc=loca)
+  } else {
+    install.packages("rstiefel", repos="https://cloud.r-project.org/")
+    library(rstiefel)
+  } 
+}
 
 # simulate one unstructured dataset
 set.seed(201605)

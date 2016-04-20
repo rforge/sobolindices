@@ -6,8 +6,8 @@ Author: Min Wang, Rong Lu and Grzegorz Rempala
 Maintainer: Min Wang <wang.1807@mbi.osu.edu>
 Description: The SobolIndices package implements the methods for
   determining the numerator of the sobol indices.
-Depends: R (>= 3.1), cubature
-Imports: MASS, mvtnorm, methods, stats, graphics, cubature, rstiefel
+Depends: R (>= 3.1)
+Imports: MASS, mvtnorm, methods, stats, graphics, rstiefel, cubature
 License: Apache License (== 2.0)
 biocViews: Variable Selection
 URL: https://r-forge.r-project.org/

@@ -1,7 +1,7 @@
 \name{SobolIndices-class}
 \docType{class}
 \alias{SobolIndices-class}
-\alias{summary,SobolIndices-method}
+\alias{SobolIndices-method}
 \alias{summary}
 \alias{SobolIndices}
 \alias{Sobol}
