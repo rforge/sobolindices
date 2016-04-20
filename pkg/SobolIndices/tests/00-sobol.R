@@ -1,5 +1,6 @@
 ###################################################################################
 # library(SobolIndices)
+library(rstiefel)
 
 # simulate one unstructured dataset
 set.seed(201605)
@@ -20,93 +21,59 @@ ranData <- mvrnorm(N, mu, Sigma)
 
 ## logit link
 # integral approach up to 2nd order
-ptm <- proc.time()
+
 LogitSImainsingle(1, ranData, c(0.1, beta))
-proc.time() - ptm
 
-ptm <- proc.time()
 logit.SI <- LogitSImain(ranData, c(0.1, beta))
-proc.time() - ptm
 
-ptm <- proc.time()
 LogitSIsecpair(c(1,2), ranData, c(0.1, beta))
-proc.time() - ptm
 
-ptm <- proc.time()
 logit.SI <- LogitSIsec(ranData, c(0.1, beta))
-proc.time() - ptm
+
 
 # sampling approach for any order
-ptm <- proc.time()
+
 LogitSImainsample(1, ranData, c(0.1, beta))
-proc.time() - ptm
 
-ptm <- proc.time()
 logit.SI <- LogitSIfordersample(ranData, c(0.1, beta))
-proc.time() - ptm
 
-ptm <- proc.time()
 LogitSIkintersample(1, ranData, c(0.1, beta))
-proc.time() - ptm
+
 
 # check when k=1 or first order
-ptm <- proc.time()
+
 logit.SI <- LogitSIkordersample(2, ranData, c(0.1, beta))
-proc.time() - ptm
 
 
 ## identity link
 
-ptm <- proc.time()
 IdenSImainsingle(1, ranData, c(0.1, beta))
-proc.time() - ptm
 
-ptm <- proc.time()
 logit.SI <- IdenSImain(ranData, c(0.1, beta))
-proc.time() - ptm
 
-ptm <- proc.time()
 IdenSIsecpair(c(1,2), ranData, c(0.1, beta))
-proc.time() - ptm
 
-ptm <- proc.time()
 logit.SI <- IdenSIsec(ranData, c(0.1, beta))
-proc.time() - ptm
 
-ptm <- proc.time()
 IdenSIkinter(c(1,2,3), ranData, c(0.1, beta))
-proc.time() - ptm
 
-ptm <- proc.time()
 logit.SI <- IdenSIkorder(3, ranData, c(0.1, beta))
-proc.time() - ptm
 
 
 ## log link
 
-ptm <- proc.time()
 LogSImainsingle(1, ranData, c(0.1, beta)/10)
-proc.time() - ptm
 
-ptm <- proc.time()
 logit.SI <- LogSImain(ranData, c(0.1, beta)/10)
-proc.time() - ptm
 
-ptm <- proc.time()
 LogSIsecpair(c(1,2), ranData, c(0.1, beta)/10)
-proc.time() - ptm
 
-ptm <- proc.time()
 logit.SI <- LogSIsec(ranData, c(0.1, beta)/10)
-proc.time() - ptm
 
-ptm <- proc.time()
 LogSIkinter(c(1,2,3), ranData, c(0.1, beta)/10)
-proc.time() - ptm
 
-ptm <- proc.time()
 logit.SI <- LogSIkorder(3, ranData, c(0.1, beta)/10)
-proc.time() - ptm
+
 
 ##################################################################################
 ### test external interface on random data
