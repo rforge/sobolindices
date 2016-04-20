@@ -72,7 +72,7 @@ models, submitted.
 }
 \author{Min Wang <wang.1807@mbi.osu.edu>}
 \seealso{
-  Methods to address the other link functions can be found at \code{identitySI} and 
+  Methods to address the other link functions can be found at \code{identitySI2} and 
   \code{logitSI}.
 }
 \examples{

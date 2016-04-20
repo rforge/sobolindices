@@ -61,7 +61,7 @@ IdenSIkorder(k, xdata, beta)
 
   The \code{IdenSIkorder} function returns a list (or numeric object) which 
   are the numerators of sobol indices for deriving the main effects of all 
-  possible variables interactions of order \code{orderinput}. 
+  possible variables interactions of order \code{k}. 
 }
 \references{
 Sobol, I. M. (1990). On sensitivity estimation for nonlinear mathematical models, 
