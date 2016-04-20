@@ -6,9 +6,8 @@ library(rstiefel)
 
 # simulate one unstructured dataset
 set.seed(201605)
-N <- 100
-p <- 20
-d <- 5
+N <- 50
+p <- 10
 lambdavec <- sort(runif(p, min=1, max=10), decreasing=TRUE)
 Tau <- rustiefel(p, p)
 mu <- runif(p, min=-5, max=5)
@@ -30,7 +29,7 @@ logit.SI <- LogitSImain(ranData, c(0.1, beta))
 
 LogitSIsecpair(c(1,2), ranData, c(0.1, beta))
 
-logit.SI <- LogitSIsec(ranData, c(0.1, beta))
+# logit.SI <- LogitSIsec(ranData, c(0.1, beta))
 
 
 # sampling approach for any order
