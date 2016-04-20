@@ -2,6 +2,7 @@
 \docType{class}
 \alias{SobolIndices-class}
 \alias{summary,SobolIndices-method}
+\alias{summary}
 \alias{SobolIndices}
 \alias{Sobol}
 \title{Estimating Sobol Indices Using Sensitivity Analysis}
@@ -26,6 +27,7 @@ summary(object, ...)
      by the regression model.}
   \item{link}{A character; the link function used under the GLM model.}
   \item{object}{An object of the \code{SobolIndices} class.}
+  \item{...}{Other arguments that could be added.}
 }
 \section{Objects from the Class}{
 Objects should be created using the \code{SobolIndices} constructor.
