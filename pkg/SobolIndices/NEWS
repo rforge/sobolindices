@@ -1,0 +1,33 @@
+			Dear Emacs, please make this -*-Text-*- mode!
+	**************************************************
+	*						 *
+	*	       1.1 SERIES NEWS			 *
+	*						 *
+	**************************************************
+
+
+NEW FEATURES
+
+    o	None.
+
+    o	None.
+
+BUG FIXES
+
+    o	None. 
+
+	**************************************************
+	*						 *
+	*	       1.0 SERIES NEWS			 *
+	*						 *
+	**************************************************
+
+
+NEW FEATURES
+
+    o	Initial version. Class SobolIndices and SobolIndicesAll.
+
+BUG FIXES
+
+    o	Numerous.
+

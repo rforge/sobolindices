@@ -1,0 +1,31 @@
+###
+### NAMESPACE
+###
+import(methods)
+import(stats)
+import(graphics)
+import(MASS)
+import(mvtnorm)
+importFrom(cubature, adaptIntegrate)
+
+# compute Sobol Indices using integrals under logit link
+export(LogitSImainsingle, LogitSImain, LogitSIsecpair, LogitSIsec)
+
+# compute Sobol Indices using sampling under logit link
+export(LogitSImainsample, LogitSIfordersample, LogitSIsecpair, 
+      LogitSIsec, LogitSIkintersample, LogitSIkordersample)
+
+# compute Sobol Indices using formula under identity link
+export(IdenSImainsingle, IdenSImain, IdenSIsecpair, 
+      IdenSIsec, IdenSIkinter, IdenSIkorder)
+
+# compute Sobol Indices using formula under log link
+export(LogSImainsingle, LogSImain, LogSIsecpair, 
+      LogSIsec, LogSIkinter, LogSIkorder)
+
+# compute Sobol Indices using Auer-Gervini method
+exportClasses("SobolIndices")
+exportClasses("SobolIndicesAll")
+export(SobolIndices, SobolIndicesAll)
+
+
