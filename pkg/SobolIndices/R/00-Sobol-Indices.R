@@ -6,6 +6,7 @@
 library(MASS)
 library(cubature)
 library(mvtnorm)
+library(rstiefel)
 
 ## use integral to compute E(Z^(s-integer.part)/(1+Z))
 SIint <- function(s, sigma) {
