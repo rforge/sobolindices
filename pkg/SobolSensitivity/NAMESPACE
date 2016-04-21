@@ -14,15 +14,15 @@ export(LogitSImainsingle, LogitSImain, LogitSIsecpair, LogitSIsec)
 
 # compute Sobol Indices using sampling under logit link
 export(LogitSImainsample, LogitSIfordersample, LogitSIsecpair, 
-      LogitSIsec, LogitSIkintersample, LogitSIkordersample)
+     LogitSIsec, LogitSIkintersample, LogitSIkordersample)
 
 # compute Sobol Indices using formula under identity link
 export(IdenSImainsingle, IdenSImain, IdenSIsecpair, 
-      IdenSIsec, IdenSIkinter, IdenSIkorder)
+     IdenSIsec, IdenSIkinter, IdenSIkorder)
 
 # compute Sobol Indices using formula under log link
 export(LogSImainsingle, LogSImain, LogSIsecpair, 
-      LogSIsec, LogSIkinter, LogSIkorder)
+     LogSIsec, LogSIkinter, LogSIkorder)
 
 # compute Sobol Indices using Auer-Gervini method
 exportClasses("SobolIndices")
