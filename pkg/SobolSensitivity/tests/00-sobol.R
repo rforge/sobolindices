@@ -1,6 +1,6 @@
 
 ###################################################################################
-library(SobolIndices)
+library(SobolSensitivity)
 
 if (!require("rstiefel")) {
   if (.Platform$OS.type == "unix") {
