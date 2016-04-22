@@ -6,6 +6,7 @@ import(stats)
 import(graphics)
 import(MASS)
 import(cubature)
+import(mvtnorm)
 
 # compute Sobol Indices using integrals under logit link
 export(LogitSImainsingle, LogitSImain, LogitSIsecpair, LogitSIsec)

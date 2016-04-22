@@ -4,6 +4,7 @@
 # functions 
 
 library(MASS)
+library(mvtnorm)
 
 if (!require("cubature")) {
   if (.Platform$OS.type == "unix") {
@@ -16,7 +17,6 @@ if (!require("cubature")) {
   } 
 }
 
-# library(mvtnorm)
 # library(rstiefel)
 
 ## use integral to compute E(Z^(s-integer.part)/(1+Z))
