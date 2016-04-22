@@ -4,9 +4,20 @@
 # functions 
 
 library(MASS)
-library(cubature)
-library(mvtnorm)
-library(rstiefel)
+
+if (!require("cubature")) {
+  if (.Platform$OS.type == "unix") {
+    loca <- getwd()
+    install.packages("cubature", repos="https://cloud.r-project.org/", lib=loca)
+    library(cubature, lib.loc=loca)
+  } else {
+    install.packages("cubature", repos="https://cloud.r-project.org/")
+    library(cubature)
+  } 
+}
+
+# library(mvtnorm)
+# library(rstiefel)
 
 ## use integral to compute E(Z^(s-integer.part)/(1+Z))
 SIint <- function(s, sigma) {
@@ -172,11 +183,13 @@ LogitSIsecpair <- function(pair, xdata, beta) {
 
 ## compute Sobol indices for all paired variables' main effects by using integrals
 LogitSIsec <- function(xdata, beta){
-    SI <- matrix(NA, ncol(xdata), ncol(xdata))
+    SI <- matrix(0, ncol(xdata), ncol(xdata))
     SIpairs <- apply(combn(1:ncol(xdata), 2), 2, function(x) 
                      LogitSIsecpair(x, xdata, beta))
     SI[lower.tri(SI)] <- SIpairs
-    SI[upper.tri(SI)] <- SIpairs
+    SI <- SI + t(SI)
+    diag(SI) <- NA
+    return(SI)
 }
 
 ###---------------------------------------------------------------------------
@@ -300,11 +313,12 @@ LogitSIkordersample <- function(k, xdata, beta){
     SI <- apply(combn(1:ncol(xdata), k), 2, function(x) list(inter_term=x, SIkinter=
           LogitSIkintersample(x, xdata, beta)))
     } else if (k == 2){
-        SI <- matrix(NA, ncol(xdata), ncol(xdata))
+        SI <- matrix(0, ncol(xdata), ncol(xdata))
         SIpairs <- apply(combn(1:ncol(xdata), 2), 2, function(x) 
                    LogitSIkintersample(x, xdata, beta))
         SI[lower.tri(SI)] <- SIpairs
-        SI[upper.tri(SI)] <- SIpairs 
+        SI <- SI + t(SI)
+        diag(SI) <- NA
     } else {
         SI <- LogitSIfordersample(xdata, beta)
     }
@@ -365,11 +379,12 @@ IdenSIsecpair <- function(pair, xdata, beta){
 
 ## compute Sobol indices for all possible paired variables' main effects
 IdenSIsec <- function(xdata, beta){
-    SI <- matrix(NA, ncol(xdata), ncol(xdata))
+    SI <- matrix(0, ncol(xdata), ncol(xdata))
     SIpairs <- apply(combn(1:ncol(xdata), 2), 2, function(x) 
                          IdenSIsecpair(x, xdata, beta))
     SI[lower.tri(SI)] <- SIpairs
-    SI[upper.tri(SI)] <- SIpairs
+    SI <- SI + t(SI)
+    diag(SI) <- NA
     return(SI)
 }
 
@@ -486,11 +501,12 @@ LogSIsecpair <- function(pair, xdata, beta) {
 
 ## compute Sobol indices for all possible paired variables' main effects
 LogSIsec <- function(xdata, beta){
-    SI <- matrix(NA, ncol(xdata), ncol(xdata))
+    SI <- matrix(0, ncol(xdata), ncol(xdata))
     SIpairs <- apply(combn(1:ncol(xdata), 2), 2, function(x) 
                          LogSIsecpair(x, xdata, beta))
     SI[lower.tri(SI)] <- SIpairs
-    SI[upper.tri(SI)] <- SIpairs
+    SI <- SI + t(SI)
+    diag(SI) <- NA
     return(SI)
 }
 
