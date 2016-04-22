@@ -5,8 +5,6 @@ import(methods)
 import(stats)
 import(graphics)
 import(MASS)
-import(mvtnorm)
-import(rstiefel)
 import(cubature)
 
 # compute Sobol Indices using integrals under logit link
