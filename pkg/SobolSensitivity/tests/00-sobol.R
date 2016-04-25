@@ -41,6 +41,7 @@ ranData <- mvrnorm(N, mu, Sigma)
 ### perform the Sobol indices use different link models
 
 ## logit link
+
 # integral approach up to 2nd order
 
 # LogitSImainsingle(1, ranData, c(0.1, beta))
@@ -100,6 +101,7 @@ ranData <- mvrnorm(N, mu, Sigma)
 ### test external interface on random data
 
 ## single variable main effect
+
 # identity link for variable 1
 SI1a <- SobolIndices(ranData, varinput=1, c(0.1, beta)/10, link="identity")
 SI1a@sobol.indices
@@ -114,6 +116,7 @@ SI1c@sobol.indices
 
 
 ## two variables interaction main effect
+
 # identity link for variables 1 and 2 interaction
 SI2a <- SobolIndices(ranData, varinput=c(1,2,3), c(0.1, beta)/10, link="identity")
 SI2a@sobol.indices
@@ -128,6 +131,7 @@ SI2c@sobol.indices
 
 
 ## all single variables' main effects
+
 # identity link for single variables
 SI3a <- SobolIndicesAll(ranData, orderinput=1, c(0.1, beta)/10, link="identity")
 SI3a@sobol.indices.all
@@ -145,6 +149,7 @@ summary(SI3c)
 
 
 ## all variables interactions' main effects
+
 # identity link for all paired variables
 SI4a <- SobolIndicesAll(ranData, orderinput=2, c(0.1, beta)/10, link="identity")
 SI4a@sobol.indices.all
