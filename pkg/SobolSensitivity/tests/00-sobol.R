@@ -43,57 +43,57 @@ ranData <- mvrnorm(N, mu, Sigma)
 ## logit link
 # integral approach up to 2nd order
 
-LogitSImainsingle(1, ranData, c(0.1, beta))
+# LogitSImainsingle(1, ranData, c(0.1, beta))
 
-logit.SI <- LogitSImain(ranData, c(0.1, beta))
+# logit.SI <- LogitSImain(ranData, c(0.1, beta))
 
-LogitSIsecpair(c(1,2), ranData, c(0.1, beta))
+# LogitSIsecpair(c(1,2), ranData, c(0.1, beta))
 
 # logit.SI <- LogitSIsec(ranData, c(0.1, beta))
 
 
 # sampling approach for any order
 
-LogitSImainsample(1, ranData, c(0.1, beta))
+# LogitSImainsample(1, ranData, c(0.1, beta))
 
-logit.SI <- LogitSIfordersample(ranData, c(0.1, beta))
+# logit.SI <- LogitSIfordersample(ranData, c(0.1, beta))
 
-LogitSIkintersample(1, ranData, c(0.1, beta))
+# LogitSIkintersample(1, ranData, c(0.1, beta))
 
 
 # check when k=1 or first order
 
-logit.SI <- LogitSIkordersample(2, ranData, c(0.1, beta))
+# logit.SI <- LogitSIkordersample(2, ranData, c(0.1, beta))
 
 
 ## identity link
 
-IdenSImainsingle(1, ranData, c(0.1, beta))
+# IdenSImainsingle(1, ranData, c(0.1, beta))
 
-logit.SI <- IdenSImain(ranData, c(0.1, beta))
+# logit.SI <- IdenSImain(ranData, c(0.1, beta))
 
-IdenSIsecpair(c(1,2), ranData, c(0.1, beta))
+# IdenSIsecpair(c(1,2), ranData, c(0.1, beta))
 
-logit.SI <- IdenSIsec(ranData, c(0.1, beta))
+# logit.SI <- IdenSIsec(ranData, c(0.1, beta))
 
-IdenSIkinter(c(1,2,3), ranData, c(0.1, beta))
+# IdenSIkinter(c(1,2,3), ranData, c(0.1, beta))
 
-logit.SI <- IdenSIkorder(3, ranData, c(0.1, beta))
+# logit.SI <- IdenSIkorder(3, ranData, c(0.1, beta))
 
 
 ## log link
 
-LogSImainsingle(1, ranData, c(0.1, beta)/10)
+# LogSImainsingle(1, ranData, c(0.1, beta)/10)
 
-logit.SI <- LogSImain(ranData, c(0.1, beta)/10)
+# logit.SI <- LogSImain(ranData, c(0.1, beta)/10)
 
-LogSIsecpair(c(1,2), ranData, c(0.1, beta)/10)
+# LogSIsecpair(c(1,2), ranData, c(0.1, beta)/10)
 
-logit.SI <- LogSIsec(ranData, c(0.1, beta)/10)
+# logit.SI <- LogSIsec(ranData, c(0.1, beta)/10)
 
-LogSIkinter(c(1,2,3), ranData, c(0.1, beta)/10)
+# LogSIkinter(c(1,2,3), ranData, c(0.1, beta)/10)
 
-logit.SI <- LogSIkorder(3, ranData, c(0.1, beta)/10)
+# logit.SI <- LogSIkorder(3, ranData, c(0.1, beta)/10)
 
 
 ##################################################################################
