@@ -588,9 +588,11 @@ LogSIkorder <- function(k, xdata, beta){
 #############################################################################################
 ## S4 interface
 
+setClassUnion("matrix or frame", c("matrix", "data.frame"))
+
 setClass("SobolIndices",
          representation=list(
-           xdata="matrix",
+           xdata="matrix or frame",
            varinput="numeric",
            beta="numeric",
            link="character",
@@ -628,7 +630,7 @@ setMethod("summary", "SobolIndices", function(object, ...) {
 
 setClass("SobolIndicesAll",
          representation=list(
-           xdata="matrix",
+           xdata="matrix or frame",
            orderinput="numeric",
            beta="numeric",
            link="character",
