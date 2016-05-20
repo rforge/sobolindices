@@ -9,14 +9,14 @@
 \description{
 Sobol [1] proposed a definition called Sobol Indices for estimating 
 the importance of single variable or multiple variales' interaction. 
-We have derived the formulas for Sobol Indices by using sensitivity 
-analysis under GLM of three link functions in \code{SobolIndicesAll} 
+We have derived the formulas for main effect Sobol Indices by using 
+sensitivity analysis under GLM of three link functions in \code{SobolIndicesAll} 
 class, and compute the sobol indices of all possible variables 
 interactions of given order by using this algorithm.
 }
 \usage{
 SobolIndicesAll(xdata, orderinput=1, beta=0, link=c("identity","log","logit"))
-summary(object, ...)
+summary(object)
 }
 \arguments{
   \item{xdata}{A data set of class 'matrix' or 'data.frame' which only 
@@ -28,7 +28,6 @@ summary(object, ...)
      by the regression model.}
   \item{link}{A character; the link function used under the GLM model.}
   \item{object}{An object of the \code{SobolIndicesAll} class.}
-  \item{...}{Other arguments that could be added.}
 }
 \section{Objects from the Class}{
 Objects should be created using the \code{SobolIndicesAll} constructor.
@@ -51,7 +50,7 @@ Objects should be created using the \code{SobolIndicesAll} constructor.
 }
 \section{Methods}{
   \describe{
-    \item{summary}{\code{signature(object = "SobolIndicesAll")}: ... }
+    \item{summary}{\code{(object = "SobolIndicesAll")}}
 	 }
 }
 \details{
@@ -76,8 +75,9 @@ Objects should be created using the \code{SobolIndicesAll} constructor.
 \references{
   [1] Sobol, I. M. (1990). On sensitivity estimation for nonlinear mathematical models, 
       Matematicheskoe Modelirovanie, 2, 112-118.
-  [2] Lu, R., Rempala, G. and Wang, M. (2016). Sensitivity Analysis of Generalized Linear 
-      models, submitted.
+
+  [2] Lu, R., Wang D., Wang, M. and Rempala, G. (2016). Identifying Dependent Expression
+      Patterns Using Sobol Sensitivity Indices, submitted.
 }
 \author{Min Wang <wang.1807@mbi.osu.edu>}
 \seealso{

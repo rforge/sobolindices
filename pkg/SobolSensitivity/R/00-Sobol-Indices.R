@@ -217,23 +217,30 @@ LogitSImainsample <- function(i, xdata, beta) {
 
     samplei <- xdata[,i]
     condexp <- rep(0, length(samplei))
-    for (k in 1:length(samplei)) {
-        mu.i <- cond.mu.i.b0 + cond.mu.i.b1 * samplei[k]
+    if (cond.sigma.i > 0) {
+      for (k in 1:length(samplei)) {
+          mu.i <- cond.mu.i.b0 + cond.mu.i.b1 * samplei[k]
 
-        if (mu.i / cond.sigma.i > 0) {
-          s.i <- 1 + mu.i / cond.sigma.i
-          sumlist <- sapply(1:floor(s.i), function(x) (-1)^(x-1)*exp(1/2*(s.i-x)^2*cond.sigma.i) )
-          condexp[k] <- sum(sumlist) + (-1)^(floor(s.i))*SIint(s.i, cond.sigma.i)
-        } else if (mu.i / cond.sigma.i < -1) {
-          s.i <- - mu.i / cond.sigma.i
-          sumlist <- sapply(1:floor(s.i), function(x) (-1)^(x-1)*exp(1/2*(s.i-x)^2*cond.sigma.i) )
-          condexp[k] <- sum(sumlist) + (-1)^(floor(s.i))*SIint(s.i, cond.sigma.i)          
-        } else {
-          s.i <- mu.i / cond.sigma.i
-          condexp[k] <- SIint(1+s.i, cond.sigma.i)
-        }
-    condexp[k] <- exp( - mu.i^2 / (2 * cond.sigma.i) ) * condexp[k]
-    }  
+          if (mu.i / cond.sigma.i > 0) {
+            s.i <- 1 + mu.i / cond.sigma.i
+            sumlist <- sapply(1:floor(s.i), function(x) (-1)^(x-1)*exp(1/2*(s.i-x)^2*cond.sigma.i) )
+            condexp[k] <- sum(sumlist) + (-1)^(floor(s.i))*SIint(s.i, cond.sigma.i)
+          } else if (mu.i / cond.sigma.i < -1) {
+            s.i <- - mu.i / cond.sigma.i
+            sumlist <- sapply(1:floor(s.i), function(x) (-1)^(x-1)*exp(1/2*(s.i-x)^2*cond.sigma.i) )
+            condexp[k] <- sum(sumlist) + (-1)^(floor(s.i))*SIint(s.i, cond.sigma.i)          
+          } else {
+            s.i <- mu.i / cond.sigma.i
+            condexp[k] <- SIint(1+s.i, cond.sigma.i)
+          }
+      condexp[k] <- exp( - mu.i^2 / (2 * cond.sigma.i) ) * condexp[k]
+      } 
+    } else {
+      for (k in 1:length(samplei)) {
+        mu.i <- cond.mu.i.b0 + cond.mu.i.b1 * samplei[k]
+        condexp[k] <- exp(mu.i) / (1 + exp(mu.i))
+      }
+    }
     
     SIi <- var(condexp)
     return(SIi)
@@ -280,23 +287,30 @@ LogitSIkintersample <- function(interaction, xdata, beta) {
 
     samplei <- xdata[,interaction]
     condexp <- rep(0, nrow(samplei))
-    for (k in 1:nrow(samplei)) {
-        mu.i <- cond.mu.i.b0 + t(cond.mu.i.b1) %*% samplei[k,]
+    if (cond.sigma.i > 0) {
+      for (k in 1:nrow(samplei)) {
+          mu.i <- cond.mu.i.b0 + t(cond.mu.i.b1) %*% samplei[k,]
 
-        if (mu.i / cond.sigma.i > 0) {
-          s.i <- 1 + mu.i / cond.sigma.i
-          sumlist <- sapply(1:floor(s.i), function(x) (-1)^(x-1)*exp(1/2*(s.i-x)^2*cond.sigma.i) )
-          condexp[k] <- sum(sumlist) + (-1)^(floor(s.i))*SIint(s.i, cond.sigma.i)
-        } else if (mu.i / cond.sigma.i < -1) {
-          s.i <- - mu.i / cond.sigma.i
-          sumlist <- sapply(1:floor(s.i), function(x) (-1)^(x-1)*exp(1/2*(s.i-x)^2*cond.sigma.i) )
-          condexp[k] <- sum(sumlist) + (-1)^(floor(s.i))*SIint(s.i, cond.sigma.i)          
-        } else {
-          s.i <- mu.i / cond.sigma.i
-          condexp[k] <- SIint(1+s.i, cond.sigma.i)
-        }
-    condexp[k] <- exp( - mu.i^2 / (2 * cond.sigma.i) ) * condexp[k]
-    }  
+          if (mu.i / cond.sigma.i > 0) {
+            s.i <- 1 + mu.i / cond.sigma.i
+            sumlist <- sapply(1:floor(s.i), function(x) (-1)^(x-1)*exp(1/2*(s.i-x)^2*cond.sigma.i) )
+            condexp[k] <- sum(sumlist) + (-1)^(floor(s.i))*SIint(s.i, cond.sigma.i)
+          } else if (mu.i / cond.sigma.i < -1) {
+            s.i <- - mu.i / cond.sigma.i
+            sumlist <- sapply(1:floor(s.i), function(x) (-1)^(x-1)*exp(1/2*(s.i-x)^2*cond.sigma.i) )
+            condexp[k] <- sum(sumlist) + (-1)^(floor(s.i))*SIint(s.i, cond.sigma.i)          
+          } else {
+            s.i <- mu.i / cond.sigma.i
+            condexp[k] <- SIint(1+s.i, cond.sigma.i)
+          }
+      condexp[k] <- exp( - mu.i^2 / (2 * cond.sigma.i) ) * condexp[k]
+      }  
+    } else {
+      for (k in 1:length(samplei)) {
+        mu.i <- cond.mu.i.b0 + t(cond.mu.i.b1) %*% samplei[k,] 
+        condexp[k] <- exp(mu.i) / (1 + exp(mu.i))  
+      }
+    }
     
     SIkinter <- var(condexp)
     return(SIkinter)

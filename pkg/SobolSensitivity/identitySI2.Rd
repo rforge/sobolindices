@@ -67,8 +67,8 @@ IdenSIkorder(k, xdata, beta)
 Sobol, I. M. (1990). On sensitivity estimation for nonlinear mathematical models, 
 Matematicheskoe Modelirovanie, 2, 112-118.
 
-Lu, R., Rempala, G. and Wang, M. (2016). Sensitivity Analysis of Generalized Linear 
-models, submitted.
+Lu, R., Wang D., Wang, M. and Rempala, G. (2016). Identifying Dependent Expression
+Patterns Using Sobol Sensitivity Indices, submitted.
 }
 \author{Min Wang <wang.1807@mbi.osu.edu>}
 \seealso{
