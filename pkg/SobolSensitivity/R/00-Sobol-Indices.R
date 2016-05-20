@@ -627,6 +627,7 @@ setMethod("summary", "SobolIndices", function(object, ...) {
        object@sobol.indices, ".\n", sep="")
 })
                          
+setClassUnion("numeric or matrix or list", c("numeric", "matrix", "list"))
 
 setClass("SobolIndicesAll",
          representation=list(
@@ -634,7 +635,7 @@ setClass("SobolIndicesAll",
            orderinput="numeric",
            beta="numeric",
            link="character",
-           sobol.indices.all="list"
+           sobol.indices.all="numeric or matrix or list"
          ))  
 
 SobolIndicesAll <- function(xdata, 
@@ -653,36 +654,36 @@ SobolIndicesAll <- function(xdata,
                           logit=LogitSIkordersample(orderinput, xdata, beta))
    new("SobolIndicesAll",
        xdata=xdata, orderinput=orderinput, beta=beta,
-       link=link, sobol.indices.all=list(sobol.indices.all))
+       link=link, sobol.indices.all=sobol.indices.all)
 }
 
 setMethod("summary", "SobolIndicesAll", function(object, ...) {
   if (object@orderinput >= 3) {
     cat("An '", class(object), "' object that estimates the (numerator) sobol indices for ",
       "all variable interactions of order", paste(object@orderinput)," to be :", "\n", sep="") 
-    if (length(object@sobol.indices.all[[1]]) >= 200) {
+    if (length(object@sobol.indices.all) >= 200) {
       cat("(there are more than 200 interactions, and the first 50 are showed here)", "\n", 
         sep="")
-      print(object@sobol.indices.all[[1]][1:50])
+      print(object@sobol.indices.all[1:50])
     } else {
-      print(object@sobol.indices.all[[1]])
+      print(object@sobol.indices.all)
     }
   } else if (object@orderinput == 2) {
       cat("An '", class(object), "' object that estimates the (numerator) sobol indices for ",
         "all variable interactions of order", paste(object@orderinput)," to be :", "\n", sep="")
-      if (ncol(object@sobol.indices.all[[1]]) > 100) {
+      if (ncol(object@sobol.indices.all) > 100) {
         cat("(the output for paired variable interactions are saved in a matrix, and the size of ",
          "the matrix is greater than 100, ", "\n", sep="")
         cat("only the first 20 rows and columns are showed as follows)", "\n", sep="")
-        print(object@sobol.indices.all[[1]][1:20, 1:20]) 
+        print(object@sobol.indices.all[1:20, 1:20]) 
       } else {
         cat("(the output for paired variable interactions are saved in a matrix)", "\n", sep="")
-        print(object@sobol.indices.all[[1]]) 
+        print(object@sobol.indices.all) 
       }
     } else {
        cat("An '", class(object), "' object that estimates the (numerator) sobol indices for ",
          "all variable interactions of order", paste(object@orderinput)," to be :", "\n", sep="") 
-       print(object@sobol.indices.all[[1]])
+       print(object@sobol.indices.all)
     }
 })
 
