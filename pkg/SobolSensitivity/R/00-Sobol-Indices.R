@@ -587,6 +587,9 @@ SobolIndices <- function(xdata,
                          varinput=1,
                          beta=0,
                          link=c("identity","log","logit")) {
+  if (class(xdata)!="matrix" && class(xdata)!="data.frame") {
+    stop("The xdata matrix need to be of format data frame or matrix!")
+  }
   if (length(beta) != ncol(xdata) && length(beta) != (ncol(xdata) + 1)) {
     stop("Check the xdata matrix to see whether the columns are variables!")
   }
