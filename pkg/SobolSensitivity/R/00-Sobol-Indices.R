@@ -233,7 +233,10 @@ LogitSImainsample <- function(i, xdata, beta) {
             s.i <- mu.i / cond.sigma.i
             condexp[k] <- SIint(1+s.i, cond.sigma.i)
           }
-      condexp[k] <- exp( - mu.i^2 / (2 * cond.sigma.i) ) * condexp[k]
+        condexp[k] <- exp( - mu.i^2 / (2 * cond.sigma.i) ) * condexp[k]
+        if (is.na(condexp[k])) {
+          condexp[k] <- exp(mu.i) / (1 + exp(mu.i))
+        }
       } 
     } else {
       for (k in 1:length(samplei)) {
@@ -303,7 +306,10 @@ LogitSIkintersample <- function(interaction, xdata, beta) {
             s.i <- mu.i / cond.sigma.i
             condexp[k] <- SIint(1+s.i, cond.sigma.i)
           }
-      condexp[k] <- exp( - mu.i^2 / (2 * cond.sigma.i) ) * condexp[k]
+        condexp[k] <- exp( - mu.i^2 / (2 * cond.sigma.i) ) * condexp[k]
+        if (is.na(condexp[k])) {
+          condexp[k] <- exp(mu.i) / (1 + exp(mu.i))
+        }
       }  
     } else {
       for (k in 1:length(samplei)) {
