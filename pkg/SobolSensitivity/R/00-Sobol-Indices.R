@@ -242,7 +242,7 @@ LogitSImainsample <- function(i, xdata, beta) {
       }
     }
     
-    SIi <- var(condexp)
+    SIi <- var(condexp, na.rm=TRUE)
     return(SIi)
 }
 
@@ -312,7 +312,7 @@ LogitSIkintersample <- function(interaction, xdata, beta) {
       }
     }
     
-    SIkinter <- var(condexp)
+    SIkinter <- var(condexp, na.rm=TRUE)
     return(SIkinter)
 }
 
