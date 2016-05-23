@@ -1,6 +1,6 @@
 Package: SobolSensitivity
-Version: 1.0.0
-Date: 2016-04-19
+Version: 1.0.1
+Date: 2016-05-15
 Title: Computing the Sobol Sensitivity Indices
 Author: Min Wang, Rong Lu and Grzegorz Rempala
 Maintainer: Min Wang <wang.1807@mbi.osu.edu>

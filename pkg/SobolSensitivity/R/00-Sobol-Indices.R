@@ -627,10 +627,50 @@ SobolIndices <- function(xdata,
        link=link, sobol.indices=sobol.indices)
 }
 
+setClass("SobolIndicesTotal",
+         representation=list(
+           xdata="matrix or frame",
+           varinput="numeric",
+           beta="numeric",
+           link="character",
+           sobol.indices.total="numeric"
+         ))  
+
+SobolIndicesTotal <- function(xdata, 
+                         ydata,
+                         varinput=1,
+                         beta=0,
+                         link=c("identity","log","logit")) {
+  if (class(xdata)!="matrix" && class(xdata)!="data.frame") {
+    stop("The xdata matrix need to be of format data frame or matrix!")
+  }
+  if (length(beta) != ncol(xdata) && length(beta) != (ncol(xdata) + 1)) {
+    stop("Check the xdata matrix to see whether the columns are variables!")
+  }
+  mu <- apply(xdata, 2, mean)
+  Sigma <- cov(xdata)
+  link <- match.arg(link)
+  compinput <- setdiff(1:ncol(xdata), varinput)
+  sobol.indices.total <- switch(link,
+                          identity=var(ydata)-IdenSIkinter(compinput, xdata, beta),
+                          log=var(ydata)-LogSIkinter(compinput, xdata, beta),
+                          logit=var(ydata)-LogitSIkintersample(compinput, xdata, beta))
+   new("SobolIndices",
+       xdata=xdata, ydata=ydata, varinput=varinput, beta=beta,
+       link=link, sobol.indices.total=sobol.indices.total)
+}
+
+
 setMethod("summary", "SobolIndices", function(object, ...) {
-  cat("An '", class(object), "' object that estimates the (numerator) sobol indices of ",
+  cat("An '", class(object), "' object that estimates the (numerator) main effect sobol indices of ",
       "variable(s) ", paste(object@varinput, collapse=" ")," to be ", 
        object@sobol.indices, ".\n", sep="")
+})
+
+setMethod("summary", "SobolIndicesTotal", function(object, ...) {
+  cat("An '", class(object), "' object that estimates the (numerator) total effect sobol indices of ",
+      "variable(s) ", paste(object@varinput, collapse=" ")," to be ", 
+       object@sobol.indices.total, ".\n", sep="")
 })
                          
 setClassUnion("numeric or matrix or list", c("numeric", "matrix", "list"))
@@ -665,7 +705,7 @@ SobolIndicesAll <- function(xdata,
 
 setMethod("summary", "SobolIndicesAll", function(object, ...) {
   if (object@orderinput >= 3) {
-    cat("An '", class(object), "' object that estimates the (numerator) sobol indices for ",
+    cat("An '", class(object), "' object that estimates the (numerator) main effect sobol indices for ",
       "all variable interactions of order", paste(object@orderinput)," to be :", "\n", sep="") 
     if (length(object@sobol.indices.all) >= 200) {
       cat("(there are more than 200 interactions, and the first 50 are showed here)", "\n", 
@@ -675,7 +715,7 @@ setMethod("summary", "SobolIndicesAll", function(object, ...) {
       print(object@sobol.indices.all)
     }
   } else if (object@orderinput == 2) {
-      cat("An '", class(object), "' object that estimates the (numerator) sobol indices for ",
+      cat("An '", class(object), "' object that estimates the (numerator) main effect sobol indices for ",
         "all variable interactions of order", paste(object@orderinput)," to be :", "\n", sep="")
       if (ncol(object@sobol.indices.all) > 100) {
         cat("(the output for paired variable interactions are saved in a matrix, and the size of ",
@@ -687,7 +727,7 @@ setMethod("summary", "SobolIndicesAll", function(object, ...) {
         print(object@sobol.indices.all) 
       }
     } else {
-       cat("An '", class(object), "' object that estimates the (numerator) sobol indices for ",
+       cat("An '", class(object), "' object that estimates the (numerator) main effect sobol indices for ",
          "all variable interactions of order", paste(object@orderinput)," to be :", "\n", sep="") 
        print(object@sobol.indices.all)
     }

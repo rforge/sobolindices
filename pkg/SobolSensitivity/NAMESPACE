@@ -26,7 +26,8 @@ import(rstiefel)
 
 # compute Sobol Indices using Auer-Gervini method
 exportClasses("SobolIndices")
+exportClasses("SobolIndicesTotal")
 exportClasses("SobolIndicesAll")
-export(SobolIndices, SobolIndicesAll)
+export(SobolIndices, SobolIndicesTotal, SobolIndicesAll)
 
 
