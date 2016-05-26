@@ -665,7 +665,7 @@ SobolIndicesTotal <- function(xdata,
                           identity=vary-IdenSIkinter(compinput, xdata, beta),
                           log=vary-LogSIkinter(compinput, xdata, beta),
                           logit=vary-LogitSIkintersample(compinput, xdata, beta))
-   new("SobolIndices",
+   new("SobolIndicesTotal",
        xdata=xdata, ydata=ydata, varinput=varinput, beta=beta,
        link=link, sobol.indices.total=sobol.indices.total)
 }

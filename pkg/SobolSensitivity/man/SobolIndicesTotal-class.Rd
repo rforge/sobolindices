@@ -19,7 +19,7 @@ summary(object)
 \arguments{
   \item{xdata}{A data set of class 'matrix' or 'data.frame' which only 
      includes the variables or features.}
-  \item{ydata}{A data set of class 'numeric' which only 
+  \item{ydata}{A data set of class 'numeric' or 'factor' which only 
      includes the response variable or output.}
   \item{varinput}{A vector; the indices of the variables which are 
     of interest for computing their single or interaction (usually 
@@ -36,7 +36,7 @@ Objects should be created using the \code{SobolIndicesTotal} constructor.
   \describe{
     \item{\code{xdata}:}{A data set of class 'matrix' or 'data.frame' 
      which only includes the variables or features.}
-    \item{\code{ydata}:}{A data set of class 'numeric' 
+    \item{\code{ydata}:}{A data set of class 'numeric' or 'factor' 
      which only includes the response variable or output.}
     \item{\code{varinput}}{A vector which include the indices of the 
      variables which are of interest for computing their interaction 
