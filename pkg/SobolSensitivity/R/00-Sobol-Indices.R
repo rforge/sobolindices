@@ -5,6 +5,7 @@
 
 library(MASS)
 library(mvtnorm)
+library(utils)
 
 if (!require("cubature")) {
   if (.Platform$OS.type == "unix") {
@@ -292,7 +293,7 @@ LogitSIkintersample <- function(interaction, xdata, beta) {
     condexp <- rep(0, nrow(samplei))
     if (cond.sigma.i > 0) {
       for (k in 1:nrow(samplei)) {
-          mu.i <- cond.mu.i.b0 + t(cond.mu.i.b1) %*% t(samplei[k,])
+          mu.i <- cond.mu.i.b0 + t(cond.mu.i.b1) %*% samplei[k,]
 
           if (mu.i / cond.sigma.i > 0) {
             s.i <- 1 + mu.i / cond.sigma.i
@@ -313,7 +314,7 @@ LogitSIkintersample <- function(interaction, xdata, beta) {
       }  
     } else {
       for (k in 1:length(samplei)) {
-        mu.i <- cond.mu.i.b0 + t(cond.mu.i.b1) %*% t(samplei[k,]) 
+        mu.i <- cond.mu.i.b0 + t(cond.mu.i.b1) %*% samplei[k,] 
         condexp[k] <- exp(mu.i) / (1 + exp(mu.i))  
       }
     }
