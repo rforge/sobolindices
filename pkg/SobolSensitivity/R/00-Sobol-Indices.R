@@ -628,12 +628,13 @@ SobolIndices <- function(xdata,
        link=link, sobol.indices=sobol.indices)
 }
 
-setClassUnion("numeric or factor", c("numeric", "factor"))
+setClassUnion("numeric or factor or general", c("numeric", "factor", 
+    "matrix", "data.frame"))
 
 setClass("SobolIndicesTotal",
          representation=list(
-           xdata="matrix or frame",
-           ydata="numeric or factor",
+           xdata="matrix or frame or general",
+           ydata="numeric or factor or general",
            varinput="numeric",
            beta="numeric",
            link="character",
@@ -655,11 +656,10 @@ SobolIndicesTotal <- function(xdata,
   Sigma <- cov(xdata)
   link <- match.arg(link)
   compinput <- setdiff(1:ncol(xdata), varinput)
-  vary <- 0
-  if (class(ydata)=="factor") {
+  if (class(ydata)!="data.frame") {
     vary <- var(as.numeric(ydata))
   } else {
-    vary <- var(ydata)
+    vary <- var(as.numeric(ydata[,ncol(ydata)]))
   }
   sobol.indices.total <- switch(link,
                           identity=vary-IdenSIkinter(compinput, xdata, beta),
