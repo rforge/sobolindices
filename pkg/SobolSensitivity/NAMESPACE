@@ -8,6 +8,7 @@ import(MASS)
 import(cubature)
 import(mvtnorm)
 import(rstiefel)
+importFrom("utils", "combn")
 
 # compute Sobol Indices using integrals under logit link
 # export(LogitSImainsingle, LogitSImain, LogitSIsecpair, LogitSIsec)

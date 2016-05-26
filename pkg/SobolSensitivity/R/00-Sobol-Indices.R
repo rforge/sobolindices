@@ -628,9 +628,12 @@ SobolIndices <- function(xdata,
        link=link, sobol.indices=sobol.indices)
 }
 
+setClassUnion("numeric or factor", c("numeric", "factor"))
+
 setClass("SobolIndicesTotal",
          representation=list(
            xdata="matrix or frame",
+           ydata="numeric or factor",
            varinput="numeric",
            beta="numeric",
            link="character",
@@ -652,23 +655,29 @@ SobolIndicesTotal <- function(xdata,
   Sigma <- cov(xdata)
   link <- match.arg(link)
   compinput <- setdiff(1:ncol(xdata), varinput)
+  vary <- 0
+  if (class(ydata)=="factor") {
+    vary <- var(as.numeric(ydata))
+  } else {
+    vary <- var(ydata)
+  }
   sobol.indices.total <- switch(link,
-                          identity=var(ydata)-IdenSIkinter(compinput, xdata, beta),
-                          log=var(ydata)-LogSIkinter(compinput, xdata, beta),
-                          logit=var(ydata)-LogitSIkintersample(compinput, xdata, beta))
+                          identity=vary-IdenSIkinter(compinput, xdata, beta),
+                          log=vary-LogSIkinter(compinput, xdata, beta),
+                          logit=vary-LogitSIkintersample(compinput, xdata, beta))
    new("SobolIndices",
        xdata=xdata, ydata=ydata, varinput=varinput, beta=beta,
        link=link, sobol.indices.total=sobol.indices.total)
 }
 
 
-setMethod("summary", "SobolIndices", function(object, ...) {
+setMethod("summary", "SobolIndices", function(object) {
   cat("An '", class(object), "' object that estimates the (numerator) main effect sobol indices of ",
       "variable(s) ", paste(object@varinput, collapse=" ")," to be ", 
        object@sobol.indices, ".\n", sep="")
 })
 
-setMethod("summary", "SobolIndicesTotal", function(object, ...) {
+setMethod("summary", "SobolIndicesTotal", function(object) {
   cat("An '", class(object), "' object that estimates the (numerator) total effect sobol indices of ",
       "variable(s) ", paste(object@varinput, collapse=" ")," to be ", 
        object@sobol.indices.total, ".\n", sep="")
@@ -704,7 +713,7 @@ SobolIndicesAll <- function(xdata,
        link=link, sobol.indices.all=sobol.indices.all)
 }
 
-setMethod("summary", "SobolIndicesAll", function(object, ...) {
+setMethod("summary", "SobolIndicesAll", function(object) {
   if (object@orderinput >= 3) {
     cat("An '", class(object), "' object that estimates the (numerator) main effect sobol indices for ",
       "all variable interactions of order", paste(object@orderinput)," to be :", "\n", sep="") 
