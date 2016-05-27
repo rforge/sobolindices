@@ -9,7 +9,7 @@
 \description{
 Sobol [1] proposed a definition called Sobol Indices for estimating 
 the importance of single variable or multiple variales' interaction. 
-We have derived the formulas for main effect Sobol Indices by using 
+We have derived the formulas for main effect Sobol indices by using 
 sensitivity analysis under GLM of three link functions in \code{SobolIndices} 
 class, and enhanced the computation by automating the whole procedure.
 }
@@ -22,9 +22,9 @@ summary(object)
      includes the variables or features.}
   \item{varinput}{A vector; the indices of the variables which are 
     of interest for computing their single or interaction (usually 
-    high order) main effect sobol indices.}
-  \item{beta}{A vector; the coefficients of the variables estimated 
-     by the regression model.}
+    high order) main effect Sobol indices.}
+  \item{beta}{A vector; the intercept and coefficients of the variables 
+     estimated from the GLM model.}
   \item{link}{A character; the link function used under the GLM model.}
   \item{object}{An object of the \code{SobolIndices} class.}
 }
@@ -36,8 +36,8 @@ Objects should be created using the \code{SobolIndices} constructor.
     \item{\code{xdata}:}{A data set of class 'matrix' or 'data.frame' 
      which only includes the variables or features.}
     \item{\code{varinput}}{A vector which include the indices of the 
-     variables which are of interest for computing their interaction 
-     (usually high order) sobol indices main effect.}
+     variables which are of interest for computing their main effect
+     Sobol indices.}
     \item{\code{beta}:}{A vector which are the coefficients of the 
      variables in a regression model.}
     \item{\code{link}:}{A character which is the link function used 
@@ -48,8 +48,7 @@ Objects should be created using the \code{SobolIndices} constructor.
 }
 \section{Methods}{
   \describe{
-    \item{summary}{\code{(object = "SobolIndices")}}
-	 }
+    \item{summary}{\code{(object="SobolIndices")}}}
 }
 \details{
   The proposed algorithm for computing the Sobol Indices is to use a 
@@ -58,26 +57,31 @@ Objects should be created using the \code{SobolIndices} constructor.
 
            \eqn{ g(E(Y|X))=\beta_0 + X \beta_1 }
 
-  where \eqn{X} is the data matrix of the varibles or features, \eqn{g(\dot)}
+  where \eqn{X} is the data matrix of the varibles or features, \eqn{g(.)}
   is the link function under GLM, and \eqn{\beta=(\beta_0, \beta_1)} is
-  the vector of intercept and coefficients estimates in GLM.
+  the vector of intercept and coefficients estimates in GLM. Note that
+  \eqn{\beta_0=0} if there is no intercept in the setting of fitting GLM.
 
   We derive the conditional expectations of the response
-  with respect to the input subsets, and then estimate the Sobol'
-  sensitivity indices directly using closed formulas or approximately
-  numerically using empirical variance estimates for a large number of
-  GLMs. 
+  with respect to the input subsets, and then estimate the main effect Sobol'
+  sensitivity indices directly as follows by using closed formulas or 
+  (approximate) numerically using empirical variance estimates for a 
+  large number of GLMs:
+    
+           \eqn{S_P=Var(E(Y|X_P))/Var(Y) }
 
-  The results can enable us to perform ANOVA-type variance 
-  decomposition analysis on data with multicollinearity issue, not only
-  under Gaussian regression but also under other types of GLMs such 
-  as Poisson and logistic regression. The resulting sobol indices for
-  the variables interaction (or single variable) of interest  are 
-  stored in the \code{sobol.indices} slot.
+  where \eqn{P} is the index set for the subset of variables of interest. 
+   
+  The results (numerator of Sobol Indices) can enable us to perform 
+  ANOVA-type variance decomposition analysis on data with 
+  multicollinearity issue, not only under Gaussian regression but 
+  also under other types of GLMs such as Poisson and logistic 
+  regression. The resulting main effect Sobol indices for the variables 
+  of interest are stored in the \code{sobol.indices} slot.
 }
 \value{
-  The \code{SobolIndices} function computes the sobol indices for variables
-  of interest, constructs and returns an object of the \code{SobolIndices} 
+  The \code{SobolIndices} function computes the main effect Sobol indices for 
+  variables of interest, constructs and returns an object of the \code{SobolIndices} 
   class.
 }
 \references{

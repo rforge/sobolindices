@@ -6,10 +6,11 @@
 \alias{SobolIndicesTotal}
 \title{Estimating Total Effect Sobol Indices Using Sensitivity Analysis}
 \description{
-Sobol [1] proposed a definition called Sobol Indices for estimating 
+Sobol [1] proposed a definition called Sobol indices for estimating 
 the importance of single variable or multiple variales' interaction. 
-We have derived the formulas for total effect Sobol Indices by using 
-sensitivity analysis under GLM of three link functions in \code{SobolIndicesTotal} 
+We have derived the formulas and rank their importance based on the
+estimated total effect Sobol indices by using sensitivity analysis 
+under GLM of three link functions in \code{SobolIndicesTotal} 
 class, and enhanced the computation by automating the whole procedure.
 }
 \usage{
@@ -22,10 +23,9 @@ summary(object)
   \item{ydata}{A data set of class 'numeric' or 'factor' which only 
      includes the response variable or output.}
   \item{varinput}{A vector; the indices of the variables which are 
-    of interest for computing their single or interaction (usually 
-    high order) total effect sobol indices.}
-  \item{beta}{A vector; the coefficients of the variables estimated 
-     by the regression model.}
+    of interest for computing their total effect Sobol indices.}
+  \item{beta}{A vector; the intercept and coefficients of the variables 
+     estimated by the GLM model.}
   \item{link}{A character; the link function used under the GLM model.}
   \item{object}{An object of the \code{SobolIndicesTotal} class.}
 }
@@ -39,10 +39,10 @@ Objects should be created using the \code{SobolIndicesTotal} constructor.
     \item{\code{ydata}:}{A data set of class 'numeric' or 'factor' 
      which only includes the response variable or output.}
     \item{\code{varinput}}{A vector which include the indices of the 
-     variables which are of interest for computing their interaction 
-     (usually high order) sobol indices main effect.}
+     variables which are of interest for computing their total effect 
+     Sobol indices.}
     \item{\code{beta}:}{A vector which are the coefficients of the 
-     variables in a regression model.}
+     variables in a GLM model.}
     \item{\code{link}:}{A character which is the link function used 
      under the GLM model.}
     \item{\code{sobol.indices.total}:}{A numeric number which is the 
@@ -51,25 +51,40 @@ Objects should be created using the \code{SobolIndicesTotal} constructor.
 }
 \section{Methods}{
   \describe{
-    \item{summary}{\code{(object = "SobolIndicesTotal")}}
-	 }
+    \item{summary}{\code{(object = "SobolIndicesTotal")}}}
 }
 \details{
   The proposed algorithm for computing the total effect Sobol Indices is 
   to use a simple strategy under the GLM model with independent or multivariate
-  normal inputs. We derive the conditional expectations of the response
-  with respect to the input subsets, and then estimate the Sobol'
-  sensitivity indices directly using closed formulas or approximately
-  numerically using empirical variance estimates for a large number of
-  GLMs. The results can enable us to perform ANOVA-type variance 
-  decomposition analysis on data with multicollinearity issue, not only
-  under Gaussian regression but also under other types of GLMs such 
-  as Poisson and logistic regression. The resulting total effect sobol indices for
-  the variables interaction (or single variable) of interest  are 
-  stored in the \code{sobol.indices.total} slot.
+  normal inputs: 
+
+           \eqn{ g(E(Y|X))=\beta_0 + X \beta_1 }
+
+  where \eqn{X} is the data matrix of the varibles or features, \eqn{g(.)}
+  is the link function under GLM, and \eqn{\beta=(\beta_0, \beta_1)} is
+  the vector of intercept and coefficients estimates in GLM. Note that
+  \eqn{\beta_0=0} if there is no intercept in the setting of fitting GLM.
+
+  We derive the conditional expectations of the response
+  with respect to the input subsets, and then estimate the total effect Sobol
+  indices directly as follows by using closed formulas or 
+  (approximate) numerically using empirical variance estimates for a 
+  large number of GLMs:
+    
+           \eqn{S^T_P=1-Var(E(Y|X_{-P}))/Var(Y)=(Var(Y)-Var(E(Y|X_{-P})))/Var(Y)}
+
+  where \eqn{-P} is the complementary set of index subset of variables 
+  of interest. 
+   
+  The results (numerator of above formula) can enable us to perform 
+  ANOVA-type variance decomposition analysis on data with 
+  multicollinearity issue, not only under Gaussian regression but 
+  also under other types of GLMs such as Poisson and logistic 
+  regression. The resulting total effect sobol indices for ranking the importance of
+  the variables of interest are stored in the \code{sobol.indices.total} slot.
 }
 \value{
-  The \code{SobolIndicesTotal} function computes the total effect sobol indices for variables
+  The \code{SobolIndicesTotal} function computes the total effect Sobol indices for variables
   of interest, constructs and returns an object of the \code{SobolIndicesTotal} 
   class.
 }

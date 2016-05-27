@@ -9,7 +9,7 @@
 \description{
 Sobol [1] proposed a definition called Sobol Indices for estimating 
 the importance of single variable or multiple variales' interaction. 
-We have derived the formulas for main effect Sobol Indices by using 
+We have derived the formulas for main effect Sobol indices by using 
 sensitivity analysis under GLM of three link functions in \code{SobolIndicesAll} 
 class, and compute the sobol indices of all possible variables 
 interactions of given order by using this algorithm.
@@ -38,9 +38,9 @@ Objects should be created using the \code{SobolIndicesAll} constructor.
      which only includes the variables or features.}
     \item{\code{orderinput}}{A integer which is the order of the 
      interaction of the variables of interest for computing all 
-     possible interactions' sobol indices main effect.}
+     possible k-order interactions' main effect Sobol indices.}
     \item{\code{beta}:}{A vector which are the coefficients of the 
-     variables in a regression model.}
+     variables in a GLM model.}
     \item{\code{link}:}{A character which is the link function used 
      under the GLM model.}
     \item{\code{sobol.indices.all}:}{A list or a numeric object which 
@@ -50,25 +50,40 @@ Objects should be created using the \code{SobolIndicesAll} constructor.
 }
 \section{Methods}{
   \describe{
-    \item{summary}{\code{(object = "SobolIndicesAll")}}
-	 }
+    \item{summary}{\code{(object = "SobolIndicesAll")}}}
 }
 \details{
   The proposed algorithm for computing the Sobol Indices is to use a 
   simple strategy under the GLM model with independent or multivariate
-  normal inputs. We derive the conditional expectations of the response
-  with respect to the input subsets, and then estimate the Sobol'
-  sensitivity indices directly using closed formulas or approximately
-  numerically using empirical variance estimates for a large number of
-  GLMs. The results can enable us to perform ANOVA-type variance 
+  normal inputs: 
+
+           \eqn{ g(E(Y|X))=\beta_0 + X \beta_1 }
+
+  where \eqn{X} is the data matrix of the varibles or features, \eqn{g(.)}
+  is the link function under GLM, and \eqn{\beta=(\beta_0, \beta_1)} is
+  the vector of intercept and coefficients estimates in GLM. Note that
+  \eqn{\beta_0=0} if there is no intercept in the setting of fitting GLM.
+
+  We derive the conditional expectations of the response
+  with respect to the input subsets, and then estimate the main effect Sobol'
+  sensitivity indices directly as follows by using closed formulas or 
+  (approximate) numerically using empirical variance estimates for a 
+  large number of GLMs:
+    
+           \eqn{S_P=Var(E(Y|X_P))/Var(Y) }
+
+  where \eqn{P} is the index set for the subset of variables of interest. 
+
+  The results can enable us to perform ANOVA-type variance 
   decomposition analysis on data with multicollinearity issue, not only
   under Gaussian regression but also under other types of GLMs such 
-  as Poisson and logistic regression. The resulting sobol indices for
-  all the variables interaction (of order \code{orderinput}) of interest
-  are stored in the \code{sobol.indices.all} slot.
+  as Poisson and logistic regression. The resulting main effect Sobol indices for
+  all the variables interaction main effect (of order \code{orderinput}) 
+  of interest (all possible index sets of length \code{orderinput}) are 
+  stored in the \code{sobol.indices.all} slot.
 }
 \value{
-  The \code{SobolIndicesAll} function computes all the sobol indices for variables
+  The \code{SobolIndicesAll} function computes all the main effect Sobol indices for variables
   interactions of order \code{orderinput}, constructs and returns an object of 
   the \code{SobolIndicesAll}  class.
 }
