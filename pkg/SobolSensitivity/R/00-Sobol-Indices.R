@@ -633,7 +633,7 @@ setClassUnion("numeric or factor or general", c("numeric", "factor",
 
 setClass("SobolIndicesTotal",
          representation=list(
-           xdata="matrix or frame or general",
+           xdata="matrix or frame",
            ydata="numeric or factor or general",
            varinput="numeric",
            beta="numeric",
