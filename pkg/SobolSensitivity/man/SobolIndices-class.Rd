@@ -54,11 +54,21 @@ Objects should be created using the \code{SobolIndices} constructor.
 \details{
   The proposed algorithm for computing the Sobol Indices is to use a 
   simple strategy under the GLM model with independent or multivariate
-  normal inputs. We derive the conditional expectations of the response
+  normal inputs: 
+
+           \eqn{ g(E(Y|X))=\beta_0 + X \beta_1 }
+
+  where \eqn{X} is the data matrix of the varibles or features, \eqn{g(\dot)}
+  is the link function under GLM, and \eqn{\beta=(\beta_0, \beta_1)} is
+  the vector of intercept and coefficients estimates in GLM.
+
+  We derive the conditional expectations of the response
   with respect to the input subsets, and then estimate the Sobol'
   sensitivity indices directly using closed formulas or approximately
   numerically using empirical variance estimates for a large number of
-  GLMs. The results can enable us to perform ANOVA-type variance 
+  GLMs. 
+
+  The results can enable us to perform ANOVA-type variance 
   decomposition analysis on data with multicollinearity issue, not only
   under Gaussian regression but also under other types of GLMs such 
   as Poisson and logistic regression. The resulting sobol indices for
