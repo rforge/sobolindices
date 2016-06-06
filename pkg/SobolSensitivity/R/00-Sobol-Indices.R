@@ -126,6 +126,10 @@ LogitSIsecpair <- function(pair, xdata, beta) {
     } else {
       stop('Check lengths of beta and mu')
     }
+    
+    if (abs(det(Sigma[pair, pair]))<=1e-16) {
+      stop("The sample covariance matrix of xdata is singular. \n This may be because the number of variables is greater than the number of samples. \n")
+    }
 
     cond.sigma.pair <- t(beta1[-pair]) %*% (Sigma[-pair, -pair] - Sigma[-pair, pair] %*%
                      solve(Sigma[pair, pair]) %*% Sigma[pair, -pair]) %*% beta1[-pair]
@@ -280,6 +284,11 @@ LogitSIkintersample <- function(interaction, xdata, beta) {
     } else {
       stop('Check lengths of beta and mu')
     }
+
+    if (abs(det(Sigma[interaction, interaction]))<=1e-16) {
+      stop("The sample covariance matrix of xdata is singular. \n This may be because the number of variables is greater than the number of samples. \n")
+    }
+
     cond.sigma.i <- t(beta1[-interaction]) %*% (Sigma[-interaction, -interaction] - 
           Sigma[-interaction, interaction] %*% solve(Sigma[interaction, interaction])
           %*% Sigma[interaction, -interaction]) %*% beta1[-interaction]
@@ -391,6 +400,11 @@ IdenSIsecpair <- function(pair, xdata, beta){
     } else {
       stop('Check dimensions of beta and Sigma')
     }
+
+    if (abs(det(Sigma[pair, pair]))<=1e-16) {
+      stop("The sample covariance matrix of xdata is singular. \n This may be because the number of variables is greater than the number of samples. \n")
+    }
+
     coefcond <- beta[pair] + solve(Sigma[pair, pair]) %*% Sigma[pair, -pair] %*% 
                 beta[-pair]
     covcond <- Sigma[pair, pair]
@@ -433,6 +447,11 @@ IdenSIkinter <- function(interaction, xdata, beta) {
     } else {
       stop('Check dimensions of beta and Sigma')
     }
+
+    if (abs(det(Sigma[interaction, interaction]))<=1e-16) {
+      stop("The sample covariance matrix of xdata is singular. \n This may be because the number of variables is greater than the number of samples. \n")
+    }
+
     coefcond <- beta[interaction] + solve(Sigma[interaction, interaction]) %*% 
                 Sigma[interaction, -interaction] %*% beta[-interaction]
     covcond <- Sigma[interaction, interaction]
@@ -507,6 +526,11 @@ LogSIsecpair <- function(pair, xdata, beta) {
     } else {
       stop('Check lengths of beta and mu')
     }
+
+    if (abs(det(Sigma[pair, pair]))<=1e-16) {
+      stop("The sample covariance matrix of xdata is singular. \n This may be because the number of variables is greater than the number of samples. \n")
+    }
+
     mustar <- t(mu[pair]) %*% (beta1[pair] + solve(Sigma[pair, pair]) %*% 
          Sigma[pair, -pair] %*% beta1[-pair])
     sigmastar <- t(beta1[pair] + solve(Sigma[pair, pair]) %*% Sigma[pair, -pair]
@@ -558,6 +582,11 @@ LogSIkinter <- function(interaction, xdata, beta) {
     } else {
       stop('Check lengths of beta and mu')
     }
+
+    if (abs(det(Sigma[interaction, interaction]))<=1e-16) {
+      stop("The sample covariance matrix of xdata is singular. \n This may be because the number of variables is greater than the number of samples. \n")
+    }
+
     mustar <- t(mu[interaction]) %*% (beta1[interaction] + solve(
          Sigma[interaction, interaction]) %*% Sigma[interaction, -interaction] %*% 
          beta1[-interaction])
@@ -616,6 +645,9 @@ SobolIndices <- function(xdata,
   if (length(beta) != ncol(xdata) && length(beta) != (ncol(xdata) + 1)) {
     stop("Check the xdata matrix to see whether the columns are variables!")
   }
+  if (any(!(varinput %in% 1:ncol(xdata)))) {
+    stop("varinput must be a subset of all features (varibles) index set")
+  }
   mu <- apply(xdata, 2, mean)
   Sigma <- cov(xdata)
   link <- match.arg(link)
@@ -652,6 +684,9 @@ SobolIndicesTotal <- function(xdata,
   if (length(beta) != ncol(xdata) && length(beta) != (ncol(xdata) + 1)) {
     stop("Check the xdata matrix to see whether the columns are variables!")
   }
+  if (any(!(varinput %in% 1:ncol(xdata)))) {
+    stop("varinput must be a subset of all varibles (features) index set")
+  }
   mu <- apply(xdata, 2, mean)
   Sigma <- cov(xdata)
   link <- match.arg(link)
@@ -661,11 +696,15 @@ SobolIndicesTotal <- function(xdata,
   } else {
     vary <- var(as.numeric(ydata[,ncol(ydata)]))
   }
-  sobol.indices.total <- switch(link,
-                          identity=vary-IdenSIkinter(compinput, xdata, beta),
-                          log=vary-LogSIkinter(compinput, xdata, beta),
-                          logit=vary-LogitSIkintersample(compinput, xdata, beta))
-   new("SobolIndicesTotal",
+  if (all(1:ncol(xdata) %in% varinput)) {
+    sobol.indices.total <- vary
+  } else { 
+    sobol.indices.total <- switch(link,
+                           identity = vary - IdenSIkinter(compinput, xdata, beta),
+                           log = vary - LogSIkinter(compinput, xdata, beta),
+                           logit = vary - LogitSIkintersample(compinput, xdata, beta))    
+  }
+  new("SobolIndicesTotal",
        xdata=xdata, ydata=ydata, varinput=varinput, beta=beta,
        link=link, sobol.indices.total=sobol.indices.total)
 }
