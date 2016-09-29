@@ -236,7 +236,11 @@ LogitSImainsample <- function(i, xdata, beta) {
             condexp[k] <- sum(sumlist) + (-1)^(floor(s.i))*SIint(s.i, cond.sigma.i)          
           } else {
             s.i <- mu.i / cond.sigma.i
+            if (abs(s.i) < 1e-2) {
+              condexp[k] <- 1/2 
+            } else {
             condexp[k] <- SIint(1+s.i, cond.sigma.i)
+            }
           }
         condexp[k] <- exp( - mu.i^2 / (2 * cond.sigma.i) ) * condexp[k]
         if (is.na(condexp[k])) {
