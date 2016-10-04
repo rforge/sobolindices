@@ -229,7 +229,11 @@ LogitSImainsample <- function(i, xdata, beta) {
           if (mu.i / cond.sigma.i > 0) {
             s.i <- 1 + mu.i / cond.sigma.i
             sumlist <- sapply(1:floor(s.i), function(x) (-1)^(x-1)*exp(1/2*(s.i-x)^2*cond.sigma.i) )
-            condexp[k] <- sum(sumlist) + (-1)^(floor(s.i))*SIint(s.i, cond.sigma.i)
+            if (s.i < 1 + 1e-2) {
+              condexp[k] <- sum(sumlist) + (-1)^(floor(s.i))*1/2
+            } else {
+              condexp[k] <- sum(sumlist) + (-1)^(floor(s.i))*SIint(s.i, cond.sigma.i)
+            }
           } else if (mu.i / cond.sigma.i < -1) {
             s.i <- - mu.i / cond.sigma.i
             sumlist <- sapply(1:floor(s.i), function(x) (-1)^(x-1)*exp(1/2*(s.i-x)^2*cond.sigma.i) )
@@ -311,7 +315,11 @@ LogitSIkintersample <- function(interaction, xdata, beta) {
           if (mu.i / cond.sigma.i > 0) {
             s.i <- 1 + mu.i / cond.sigma.i
             sumlist <- sapply(1:floor(s.i), function(x) (-1)^(x-1)*exp(1/2*(s.i-x)^2*cond.sigma.i) )
-            condexp[k] <- sum(sumlist) + (-1)^(floor(s.i))*SIint(s.i, cond.sigma.i)
+            if (s.i < 1 + 1e-2) {
+              condexp[k] <- sum(sumlist) + (-1)^(floor(s.i))*1/2
+            } else {
+              condexp[k] <- sum(sumlist) + (-1)^(floor(s.i))*SIint(s.i, cond.sigma.i)
+            }
           } else if (mu.i / cond.sigma.i < -1) {
             s.i <- - mu.i / cond.sigma.i
             sumlist <- sapply(1:floor(s.i), function(x) (-1)^(x-1)*exp(1/2*(s.i-x)^2*cond.sigma.i) )
