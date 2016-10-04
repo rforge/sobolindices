@@ -51,7 +51,8 @@ Objects should be created using the \code{SobolIndicesTotal} constructor.
 }
 \section{Methods}{
   \describe{
-    \item{summary}{\code{(object = "SobolIndicesTotal")}}}
+    \item{summary}{\code{(object="SobolIndicesTotal")}: ...}
+           }
 }
 \details{
   The proposed algorithm for computing the total effect Sobol Indices is 
@@ -92,8 +93,8 @@ Objects should be created using the \code{SobolIndicesTotal} constructor.
   [1] Sobol, I. M. (1990). On sensitivity estimation for nonlinear mathematical models, 
       Matematicheskoe Modelirovanie, 2, 112-118.
 
-  [2] Lu, R., Wang D., Wang, M. and Rempala, G. (2016). Identifying Dependent Expression
-      Patterns Using Sobol Sensitivity Indices, submitted.
+  [2] Lu, R., Wang D., Wang, M. and Rempala, G. (2016). Identifying Gene-gene Interactions 
+      Using Sobol Sensitivity Indices, submitted.
 }
 \author{Min Wang <wang.1807@mbi.osu.edu>}
 \seealso{

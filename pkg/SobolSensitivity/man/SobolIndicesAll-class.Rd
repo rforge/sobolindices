@@ -50,7 +50,8 @@ Objects should be created using the \code{SobolIndicesAll} constructor.
 }
 \section{Methods}{
   \describe{
-    \item{summary}{\code{(object = "SobolIndicesAll")}}}
+    \item{summary}{\code{(object = "SobolIndicesAll")}: ...}
+           }
 }
 \details{
   The proposed algorithm for computing the Sobol Indices is to use a 
@@ -91,8 +92,8 @@ Objects should be created using the \code{SobolIndicesAll} constructor.
   [1] Sobol, I. M. (1990). On sensitivity estimation for nonlinear mathematical models, 
       Matematicheskoe Modelirovanie, 2, 112-118.
 
-  [2] Lu, R., Wang D., Wang, M. and Rempala, G. (2016). Identifying Dependent Expression
-      Patterns Using Sobol Sensitivity Indices, submitted.
+  [2] Lu, R., Wang D., Wang, M. and Rempala, G. (2016). Identifying Gene-gene Interactions 
+      Using Sobol Sensitivity Indices, submitted.
 }
 \author{Min Wang <wang.1807@mbi.osu.edu>}
 \seealso{
