@@ -127,7 +127,7 @@ LogitSIsecpair <- function(pair, xdata, beta) {
       stop('Check lengths of beta and mu')
     }
     
-    if (abs(det(Sigma[pair, pair]))<=1e-16) {
+    if (min(abs(eigen(Sigma[pair, pair])$values))<=1e-16) {
       stop("The sample covariance matrix of xdata is singular. \n This may be because the number of variables is greater than the number of samples. \n")
     }
 
@@ -293,7 +293,7 @@ LogitSIkintersample <- function(interaction, xdata, beta) {
       stop('Check lengths of beta and mu')
     }
 
-    if (abs(det(Sigma[interaction, interaction]))<=1e-16) {
+    if (min(abs(eigen(Sigma[interaction, interaction])$values))<=1e-16) {
       stop("The sample covariance matrix of xdata is singular. \n This may be because the number of variables is greater than the number of samples. \n")
     }
 
@@ -417,7 +417,7 @@ IdenSIsecpair <- function(pair, xdata, beta){
       stop('Check dimensions of beta and Sigma')
     }
 
-    if (abs(det(Sigma[pair, pair]))<=1e-16) {
+    if (min(abs(eigen(Sigma[pair, pair])$values))<=1e-16) {
       stop("The sample covariance matrix of xdata is singular. \n This may be because the number of variables is greater than the number of samples. \n")
     }
 
@@ -464,7 +464,7 @@ IdenSIkinter <- function(interaction, xdata, beta) {
       stop('Check dimensions of beta and Sigma')
     }
 
-    if (abs(det(Sigma[interaction, interaction]))<=1e-16) {
+    if (min(abs(eigen(Sigma[interaction, interaction])$values))<=1e-16) {
       stop("The sample covariance matrix of xdata is singular. \n This may be because the number of variables is greater than the number of samples. \n")
     }
 
@@ -543,7 +543,7 @@ LogSIsecpair <- function(pair, xdata, beta) {
       stop('Check lengths of beta and mu')
     }
 
-    if (abs(det(Sigma[pair, pair]))<=1e-16) {
+    if (min(abs(eigen(Sigma[pair, pair])$values))<=1e-16) {
       stop("The sample covariance matrix of xdata is singular. \n This may be because the number of variables is greater than the number of samples. \n")
     }
 
@@ -599,7 +599,7 @@ LogSIkinter <- function(interaction, xdata, beta) {
       stop('Check lengths of beta and mu')
     }
 
-    if (abs(det(Sigma[interaction, interaction]))<=1e-16) {
+    if (min(abs(eigen(Sigma[interaction, interaction])$values))<=1e-16) {
       stop("The sample covariance matrix of xdata is singular. \n This may be because the number of variables is greater than the number of samples. \n")
     }
 
