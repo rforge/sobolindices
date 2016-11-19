@@ -1,12 +1,12 @@
 Package: SobolSensitivity
-Version: 1.0.1
-Date: 2016-05-15
+Version: 1.0.2
+Date: 2016-11-18
 Title: Computing the Sobol Sensitivity Indices
 Author: Min Wang, Rong Lu and Grzegorz Rempala
 Maintainer: Min Wang <wang.1807@mbi.osu.edu>
 Description: The SobolSensitivity package implements the methods for
   determining the numerator of the sobol sensitivity indices.
-Depends: R (>= 3.1), cubature, mvtnorm, rstiefel
+Depends: R (>= 3.1), cubature, pracma, mvtnorm, rstiefel
 Imports: MASS, methods, stats, graphics
 License: Apache License (== 2.0)
 biocViews: Variable Selection
