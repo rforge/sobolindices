@@ -7,6 +7,17 @@ library(MASS)
 library(mvtnorm)
 library(utils)
 
+if (!require("pracma")) {
+  if (.Platform$OS.type == "unix") {
+    loca <- getwd()
+    install.packages("pracma", repos="https://cloud.r-project.org/", lib=loca)
+    library(pracma, lib.loc=loca)
+  } else {
+    install.packages("pracma", repos="https://cloud.r-project.org/")
+    library(pracma)
+  } 
+}
+
 if (!require("cubature")) {
   if (.Platform$OS.type == "unix") {
     loca <- getwd()
@@ -30,16 +41,11 @@ SIint <- function(s, sigma) {
       t <- arg[1]
       pow <- par[1]
       sig <- par[2]
-      ff <- ( t^pow / (1 + t) ) * dnorm(log(t), mean=0, sd=sqrt(sig)) / t
+      ff <- ifelse(t==0, 0, ( t^pow / (1 + t) ) * dnorm(log(t), mean=0, sd=sqrt(sig)) / t)
       return(ff)
       }
   
-      K <- 5
-      upper1 <- exp(K * sqrt(sigma))
-      lower1 <- exp(- K * sqrt(sigma))
-      int <- adaptIntegrate(integrand1, lowerLimit=lower1, 
-            upperLimit=upper1)$integral
-
+      int <- quadinf(integrand1, 0, Inf, tol=1e-6)$Q
       return(int)
 }
 
@@ -68,7 +74,7 @@ LogitSImainsingle <- function(i, xdata, beta) {
                      %*% t(Sigma[i, -i])) %*% beta1[-i]
     cond.mu.i.b0 <- beta0 + t(beta1[-i]) %*% (mu[-i] - mu[i] / Sigma[i,i] * Sigma[-i, i])
     cond.mu.i.b1 <- beta1[i] + t(beta1[-i]) %*% Sigma[-i,i] / Sigma[i, i]
-    par <- c(mu[i], Sigma[i, i], cond.mu.i.b0, cond.mu.i.b1, cond.sigma.i)
+    par <- c(as.numeric(mu[i]), Sigma[i, i], cond.mu.i.b0, cond.mu.i.b1, cond.sigma.i)
 
     integrand1 <- function(arg, para=par) {
       s <- arg[1]
@@ -101,6 +107,7 @@ LogitSImainsingle <- function(i, xdata, beta) {
     SIi <- int1 - (int2)^2
     return(SIi)
 }
+
 
 ## compute Sobol indices for all single variables' main effects by using integrals
 LogitSImain <- function(xdata, beta){
@@ -137,7 +144,7 @@ LogitSIsecpair <- function(pair, xdata, beta) {
                     solve(Sigma[pair, pair]) %*% mu[pair])
     cond.mu.pair.b1 <- beta1[pair] + solve(Sigma[pair, pair]) %*% Sigma[pair, -pair] %*%
                     beta1[-pair] 
-    par <- list(mu[pair], Sigma[pair, pair], cond.mu.pair.b0, cond.mu.pair.b1, 
+    par <- list(as.numeric(mu[pair]), Sigma[pair, pair], cond.mu.pair.b0, cond.mu.pair.b1, 
                     cond.sigma.pair)
 
     integrand1 <- function(arg, para=par) {
@@ -229,22 +236,14 @@ LogitSImainsample <- function(i, xdata, beta) {
           if (mu.i / cond.sigma.i > 0) {
             s.i <- 1 + mu.i / cond.sigma.i
             sumlist <- sapply(1:floor(s.i), function(x) (-1)^(x-1)*exp(1/2*(s.i-x)^2*cond.sigma.i) )
-            if (s.i < 1 + 1e-2) {
-              condexp[k] <- sum(sumlist) + (-1)^(floor(s.i))*1/2
-            } else {
-              condexp[k] <- sum(sumlist) + (-1)^(floor(s.i))*SIint(s.i, cond.sigma.i)
-            }
+            condexp[k] <- sum(sumlist) + (-1)^(floor(s.i))*SIint(s.i, cond.sigma.i)
           } else if (mu.i / cond.sigma.i < -1) {
             s.i <- - mu.i / cond.sigma.i
             sumlist <- sapply(1:floor(s.i), function(x) (-1)^(x-1)*exp(1/2*(s.i-x)^2*cond.sigma.i) )
             condexp[k] <- sum(sumlist) + (-1)^(floor(s.i))*SIint(s.i, cond.sigma.i)          
           } else {
             s.i <- mu.i / cond.sigma.i
-            if (abs(s.i) < 1e-2) {
-              condexp[k] <- 1/2 
-            } else {
             condexp[k] <- SIint(1+s.i, cond.sigma.i)
-            }
           }
         condexp[k] <- exp( - mu.i^2 / (2 * cond.sigma.i) ) * condexp[k]
         if (is.na(condexp[k])) {
@@ -315,22 +314,14 @@ LogitSIkintersample <- function(interaction, xdata, beta) {
           if (mu.i / cond.sigma.i > 0) {
             s.i <- 1 + mu.i / cond.sigma.i
             sumlist <- sapply(1:floor(s.i), function(x) (-1)^(x-1)*exp(1/2*(s.i-x)^2*cond.sigma.i) )
-            if (s.i < 1 + 1e-2) {
-              condexp[k] <- sum(sumlist) + (-1)^(floor(s.i))*1/2
-            } else {
-              condexp[k] <- sum(sumlist) + (-1)^(floor(s.i))*SIint(s.i, cond.sigma.i)
-            }
+            condexp[k] <- sum(sumlist) + (-1)^(floor(s.i))*SIint(s.i, cond.sigma.i)
           } else if (mu.i / cond.sigma.i < -1) {
             s.i <- - mu.i / cond.sigma.i
             sumlist <- sapply(1:floor(s.i), function(x) (-1)^(x-1)*exp(1/2*(s.i-x)^2*cond.sigma.i) )
             condexp[k] <- sum(sumlist) + (-1)^(floor(s.i))*SIint(s.i, cond.sigma.i)          
           } else {
             s.i <- mu.i / cond.sigma.i
-            if (abs(s.i) < 1e-2) {
-              condexp[k] <- 1/2
-            } else {
-              condexp[k] <- SIint(1+s.i, cond.sigma.i)
-            }
+            condexp[k] <- SIint(1+s.i, cond.sigma.i)
           }
         condexp[k] <- exp( - mu.i^2 / (2 * cond.sigma.i) ) * condexp[k]
         if (is.na(condexp[k])) {
